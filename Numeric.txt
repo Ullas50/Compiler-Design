@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    string input;
+    bool Numeric = true;
+    cout << "Enter a value: ";
+    cin >> input;
+    for (int i = 0; i < input.length(); i++)
+        {
+        if (input[i] < '0' || input[i] > '9')
+        {
+            Numeric = false;
+            break;
+        }
+    }
+   if(Numeric && input.length()>0)
+   {
+       cout<<"This is a Numeric constant "<<endl;
+
+   }
+   else
+   {
+       cout<<"This is not a Numeric constant "<<endl;
+   }
+
+   return 0;
+
+}
