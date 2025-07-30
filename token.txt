@@ -1,0 +1,81 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+
+void checkToken(string word) {
+if (word == "+" || word == "-" || word == "*" || word == "/" || word == "=") {
+cout << "[Operator] => " << word << endl;
+}
+else if (word == ";") {
+cout << "[Semicolon] => " << word << endl;
+}
+else if (isdigit(word[0])) {
+bool allDigits = true;
+for (int i = 1; i < word.length(); i++) {
+if (!isdigit(word[i])) {
+allDigits = false;
+break;
+}
+}
+if (allDigits)
+cout << "[Number] => " << word << endl;
+else
+cout << "[Unknown] => " << word << endl;
+}
+else if (isalpha(word[0]) || word[0] == '_') {
+cout << "[Variable] => " << word << endl;
+}
+else {
+cout << "[Unknown] => " << word << endl;
+}
+}
+int splitLine(string line, string tokens[], int maxSize) {
+int count = 0;
+string word = "";
+
+for (int i = 0; i < line.length(); i++) {
+char c = line[i];
+
+if (c == ' ' || c == '+' || c == '-' || c == '*' || c == '/' || c == '=' || c == ';') {
+if (!word.empty()) {
+tokens[count++] = word;
+word = "";
+}
+if (c != ' ') {
+tokens[count++] = string(1, c);
+}
+} else {
+word += c;
+}
+}
+
+if (!word.empty()) {
+tokens[count++] = word;
+}
+return count;
+}
+
+int main() {
+string filePath = "C:\\Users\\student\\Desktop\\labtask3.txt";
+ifstream file(filePath);
+if (!file.is_open()) {
+cout << "Could not open the file!" << endl;
+return 1;
+}
+string line;
+string tokens[100];
+
+
+while (getline(file, line)) {
+int tokenCount = splitLine(line, tokens, 100);
+
+for (int i = 0; i < tokenCount; i++) {
+checkToken(tokens[i]);
+}
+}
+
+file.close();
+return 0;
+}
