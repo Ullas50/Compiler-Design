@@ -1,0 +1,4 @@
+int MI();
+int MI(){ 
+return 10;
+}

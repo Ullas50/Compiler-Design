@@ -1,0 +1,50 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+string filename = "C:\\Users\\student\\Desktop\\analysis.txt";
+ifstream file(filename);
+
+if (!file) {
+cout << "Error! Cannot open file." << endl;
+return 1;
+}
+
+string line;
+bool declared = false;
+bool defined = false;
+
+while (getline(file, line)) {
+while (!line.empty() && (line[0] == ' ' || line[0] == '\t')) {
+line.erase(0, 1);
+}
+if (line.empty()) continue;
+
+if (line.find('(') != string::npos &&
+line.find(')') != string::npos &&
+line.find(';') != string::npos &&
+line.find('{') == string::npos) {
+declared = true;
+}
+
+if (line.find('(') != string::npos &&
+line.find(')') != string::npos &&
+line.find('{') != string::npos) {
+defined = true;
+}
+}
+
+file.close();
+if (declared && defined)
+cout << "Function is properly DECLARED and DEFINED." << endl;
+else if (declared && !defined)
+cout << "Function is DECLARED but NOT DEFINED." << endl;
+else if (!declared && defined)
+cout << "Function is DEFINED but NOT DECLARED." << endl;
+else
+cout << "Function is NOT FOUND." << endl;
+
+return 0;
+}
